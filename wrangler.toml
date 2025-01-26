@@ -26,3 +26,6 @@ compatibility_date = "2025-01-26"
 # [observability]
 # enabled = true
 # head_sampling_rate = 1
+
+[observability.logs]
+enabled = true
