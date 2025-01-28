@@ -33,7 +33,6 @@ app.post("/v1/polymart", async (c) => {
     }
   } = JSON.parse(rawBody)
 
-
   // Send Telegram message, name is Plugin Portal
   const message = `🎉 New Purchase!\n\nProduct: Plugin Portal`
 
@@ -51,7 +50,6 @@ app.post("/v1/polymart", async (c) => {
       }),
     }
   )
-
 
   return c.json({ success: true })
 })
