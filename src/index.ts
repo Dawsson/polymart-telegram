@@ -32,7 +32,7 @@ app.post("/v1/polymart", async (c) => {
   return c.json({ success: true })
 })
 
-app.get("/v1/carbon", async (c) => {
+app.post("/v1/carbon", async (c) => {
   const cents = parseInt(c.req.query('cents') || '0')
   
   if (isNaN(cents) || cents <= 0) {

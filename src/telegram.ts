@@ -36,9 +36,12 @@ export class TelegramService {
 
   async sendPurchaseNotification(productName: string) {
     const message = `
-🎉 ${bold('New Purchase!')}
+🎉 ${bold('New Plugin Portal Purchase!')}
 
 ${italic('Product')}: ${code(productName)}
+${italic('Amount')}: ${code('$15.00')}
+
+Thank you for your purchase! 🚀
     `.trim()
 
     return this.sendMessage(message)
@@ -47,11 +50,12 @@ ${italic('Product')}: ${code(productName)}
   async sendCarbonOffsetNotification(cents: number) {
     const dollars = (cents / 100).toFixed(2)
     const message = `
-♻️ ${bold('Carbon Offset Contribution')}
+🖥️ ${bold('New Carbon Host Order!')}
 
+${italic('Service')}: ${code('Minecraft Server Hosting')}
 ${italic('Amount')}: ${code(`$${dollars}`)}
 
-Thank you for helping make the world a better place! 🌱
+Thank you for choosing Carbon Host! ⚡
     `.trim()
 
     return this.sendMessage(message)
