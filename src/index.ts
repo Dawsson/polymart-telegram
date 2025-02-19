@@ -1,6 +1,6 @@
 import { Hono } from 'hono'
 import { logger } from 'hono/logger'
-import { verify } from 'hono/utils/crypto'
+import { TelegramService } from './telegram'
 
 const app = new Hono<{
   Bindings: {
@@ -12,44 +12,35 @@ const app = new Hono<{
 
 app.use(logger())
 
+// Initialize Telegram service
+const createTelegramService = (c: any) => {
+  return new TelegramService({
+    botToken: c.env.TELEGRAM_BOT_TOKEN,
+    chatId: c.env.TELEGRAM_CHAT_ID,
+  })
+}
+
 app.get('/', (c) => {
   return c.text('Hello Hono!')
 })
 
 app.post("/v1/polymart", async (c) => {
-  // Verify the webhook signature
-  const signature = c.req.header('X-Polymart-Signature')
-  const rawBody = await c.req.text()
 
-  if (!signature) {
-    return c.json({ error: 'Missing signature' }, 401)
+  const telegram = createTelegramService(c)
+  await telegram.sendPurchaseNotification('Plugin Portal')
+
+  return c.json({ success: true })
+})
+
+app.get("/v1/carbon", async (c) => {
+  const cents = parseInt(c.req.query('cents') || '0')
+  
+  if (isNaN(cents) || cents <= 0) {
+    return c.json({ error: 'Invalid cents parameter' }, 400)
   }
 
-  // Should validate, url is private, just assuming no one can access it.
-  const body: {
-    event: string,
-    payload: {
-
-    }
-  } = JSON.parse(rawBody)
-
-  // Send Telegram message, name is Plugin Portal
-  const message = `🎉 New Purchase!\n\nProduct: Plugin Portal`
-
-  await fetch(
-    `https://api.telegram.org/bot${c.env.TELEGRAM_BOT_TOKEN}/sendMessage`,
-    {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        chat_id: c.env.TELEGRAM_CHAT_ID,
-        text: message,
-        parse_mode: 'HTML',
-      }),
-    }
-  )
+  const telegram = createTelegramService(c)
+  await telegram.sendCarbonOffsetNotification(cents)
 
   return c.json({ success: true })
 })
