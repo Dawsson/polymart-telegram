@@ -2,10 +2,7 @@ name = "polymart-telegram"
 main = "src/index.ts"
 compatibility_date = "2025-01-26"
 
-# compatibility_flags = [ "nodejs_compat" ]
-
-# [vars]
-# MY_VAR = "my-variable"
+compatibility_flags = [ "nodejs_compat" ]
 
 # [[kv_namespaces]]
 # binding = "MY_KV_NAMESPACE"
