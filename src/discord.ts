@@ -28,7 +28,7 @@ export class DiscordService {
       .setFooter('Plugin Portal')
       .setTimestamp();
 
-    return this.sendWebhook(embed);
+    return this.sendWebhook(embed)
   }
 
   async sendCarbonHostNotification(cents: number) {
