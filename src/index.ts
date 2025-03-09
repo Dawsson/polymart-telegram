@@ -4,6 +4,7 @@ import { z } from "zod";
 import { TelegramService } from "./telegram";
 import { DiscordService } from "./discord";
 import * as cheerio from "cheerio";
+import { sendWebhook } from "./utils/discord";
 
 // Define the environment interface
 interface Env {
@@ -111,10 +112,23 @@ export default {
       const bbbPurchases = await getBBBPurchases();
       // const spigotmcPurchases = await getSpigotmcPurchases()
 
-      console.log(`BBB Purchases: ${bbbPurchases}, BBB KV: ${bbbKV}`);
       if (bbbPurchases > bbbKV) {
-        console.log(`BBB Purchases are greater than the KV`);
+        for (let i = bbbKV; i < bbbPurchases; i++) {
+          await sendWebhook({
+            title: "🎉 New Plugin Portal Purchase!",
+            description: "$15.00",
+            fields: [
+              {
+                name: "BBB Purchases",
+                value: bbbPurchases.toString(),
+                inline: true,
+              },
+            ],
+            url: env.DISCORD_WEBHOOK,
+          });
+        }
       }
+
     } catch (error) {
       console.error("Error in scheduled function:", error);
     }
