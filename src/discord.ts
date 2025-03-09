@@ -1,4 +1,5 @@
-import { Webhook, MessageBuilder } from 'discord-webhook-node';
+// @ts-ignore - Ignoring type issues with discord-webhook-node
+import { Webhook, MessageBuilder } from "discord-webhook-node";
 
 interface DiscordConfig {
   webhookUrl: string;
@@ -9,38 +10,43 @@ export class DiscordService {
 
   constructor(config: DiscordConfig) {
     this.webhook = new Webhook(config.webhookUrl);
-  }
-
-  private async sendWebhook(embed: MessageBuilder) {
-    try {
-      await this.webhook.send(embed);
-    } catch (error) {
-      throw new Error(`Failed to send Discord message: ${error.message}`);
-    }
+    // Set a custom username and avatar for the webhook
+    this.webhook.setUsername("Notification Bot");
+    this.webhook.setAvatar("https://i.imgur.com/wSTFkRM.png");
   }
 
   async sendPurchaseNotification(productName: string) {
-    const embed = new MessageBuilder()
-      .setTitle('🎉 New Plugin Portal Purchase!')
-      .setColor('#00ff00') // Green color
-      .addField('Product', `\`${productName}\``, true)
-      .addField('Amount', '`$15.00`', true)
-      .setFooter('Plugin Portal')
-      .setTimestamp();
+    try {
+      const embed = new MessageBuilder()
+        .setTitle("🎉 New Plugin Portal Purchase!")
+        .setColor(0x00ff00) // Green color
+        .addField("Product", productName, true)
+        .addField("Amount", "$15.00", true)
+        .setFooter("Plugin Portal")
+        .setTimestamp();
 
-    return this.sendWebhook(embed)
+      return await this.webhook.send(embed);
+    } catch (error) {
+      console.error("Error sending Discord purchase notification:", error);
+      throw error;
+    }
   }
 
   async sendCarbonHostNotification(cents: number) {
-    const dollars = (cents / 100).toFixed(2);
-    const embed = new MessageBuilder()
-      .setTitle('🖥️ New Carbon Host Order!')
-      .setColor('#2b87ff') // Blue color
-      .addField('Service', '`Minecraft Server Hosting`', true)
-      .addField('Amount', `\`$${dollars}\``, true)
-      .setFooter('Carbon Host')
-      .setTimestamp();
+    try {
+      const dollars = (cents / 100).toFixed(2);
+      const embed = new MessageBuilder()
+        .setTitle("🖥️ New Carbon Host Order!")
+        .setColor(0x2b87ff) // Blue color
+        .addField("Service", "Minecraft Server Hosting", true)
+        .addField("Amount", `$${dollars}`, true)
+        .setFooter("Carbon Host")
+        .setTimestamp();
 
-    return this.sendWebhook(embed);
+      return await this.webhook.send(embed);
+    } catch (error) {
+      console.error("Error sending Discord carbon notification:", error);
+      throw error;
+    }
   }
 }

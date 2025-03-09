@@ -6,6 +6,7 @@
   },
   "dependencies": {
     "@hono/zod-validator": "^0.4.3",
+    "cheerio": "^1.0.0",
     "discord-webhook-node": "^1.1.8",
     "hono": "^4.6.19",
     "zod": "^3.24.2"

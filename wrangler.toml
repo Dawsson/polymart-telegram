@@ -4,9 +4,9 @@ compatibility_date = "2025-01-26"
 
 compatibility_flags = [ "nodejs_compat" ]
 
-# [[kv_namespaces]]
-# binding = "MY_KV_NAMESPACE"
-# id = "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+[[kv_namespaces]]
+binding = "MONEY_MADE"
+id = "1b57bac7b1304e8c84cac51a6c25d598"
 
 # [[r2_buckets]]
 # binding = "MY_BUCKET"
@@ -26,3 +26,6 @@ compatibility_flags = [ "nodejs_compat" ]
 
 [observability.logs]
 enabled = true
+
+[triggers]
+crons = ["* * * * *"]
