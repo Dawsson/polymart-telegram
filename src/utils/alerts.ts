@@ -1,5 +1,6 @@
 // @ts-ignore - Ignoring type issues with discord-webhook-node
 import { Webhook, MessageBuilder } from "discord-webhook-node";
+import { TelegramService } from "./telegram";
 
 export async function sendWebhook({
   title,

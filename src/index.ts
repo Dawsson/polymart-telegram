@@ -1,10 +1,10 @@
 import { Hono } from "hono";
 import { logger } from "hono/logger";
 import { z } from "zod";
-import { TelegramService } from "./telegram";
+import { TelegramService } from "./utils/telegram";
 import { DiscordService } from "./discord";
 import * as cheerio from "cheerio";
-import { sendWebhook } from "./utils/discord";
+import { sendWebhook } from "./utils/alerts";
 
 // Define the environment interface
 interface Env {
@@ -129,6 +129,7 @@ export default {
         }
       }
 
+      await setPurchases("bbb-purchases", bbbPurchases, env);
     } catch (error) {
       console.error("Error in scheduled function:", error);
     }
