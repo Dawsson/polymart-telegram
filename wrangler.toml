@@ -28,4 +28,4 @@ id = "1b57bac7b1304e8c84cac51a6c25d598"
 enabled = true
 
 [triggers]
-crons = ["* * * * *"]
+crons = ["0 * * * *"]
