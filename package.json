@@ -6,13 +6,17 @@
   },
   "dependencies": {
     "@hono/zod-validator": "^0.4.3",
+    "@otherguy/elysia-logging": "^0.0.17",
     "cheerio": "^1.0.0",
     "discord-webhook-node": "^1.1.8",
+    "elysia": "^1.2.25",
     "hono": "^4.6.19",
+    "pino": "^9.6.0",
     "zod": "^3.24.2"
   },
   "devDependencies": {
     "@cloudflare/workers-types": "^4.20250124.3",
-    "wrangler": "^3.101.0"
+    "wrangler": "^3.101.0",
+    "@types/bun": "^1.2.5"
   }
 }
