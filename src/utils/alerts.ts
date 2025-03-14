@@ -1,8 +1,10 @@
 // @ts-ignore - Ignoring type issues with discord-webhook-node
 import { Webhook, MessageBuilder } from "discord-webhook-node";
 
+export const PPAlert = {};
+
 export async function sendAlert(
-  product: string,
+  product: "Carbon Host" | "Plugin Portal Premium",
   amount: number,
   webhookURL: string,
   telegramConfig?: { botToken: string; chatId: string }
