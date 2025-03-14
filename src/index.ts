@@ -107,9 +107,11 @@ export default {
   ) {
     try {
       const bbbKV = await getPurchases("bbb-purchases", env);
+      console.log("BBB KV:", bbbKV);
       // const spigotmcKV = await getPurchases('spigotmc-purchases', env)
 
       const bbbPurchases = await getBBBPurchases();
+      console.log("BBB Purchases:", bbbPurchases);
       // const spigotmcPurchases = await getSpigotmcPurchases()
 
       if (bbbPurchases > bbbKV) {
@@ -145,9 +147,11 @@ async function getPurchases(name: string, env: Env) {
   try {
     const purchases = await env.MONEY_MADE.get(name);
     if (!purchases) {
+      console.log("No purchases found for", name);
       await env.MONEY_MADE.put(name, "0");
     }
 
+    console.log("Raw Purchases for", name, purchases);
     return parseInt(purchases || "0");
   } catch (error) {
     console.error(`Error getting purchases for ${name}:`, error);
